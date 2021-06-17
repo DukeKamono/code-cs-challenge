@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+	<script id="template" type="text/x-handlebars-template">
+		<ul>
+		{{#each this}}
+			<li><p>Name: {{name}}</p><p>Avatar: <img src="{{avatar}}" /></p><button class="buttonToggle">Toggle Id/Date</button><div id="hiddenText" style="display: none;"><p>Created At: {{createdAt}}</p><p>ID: {{id}}</p></div></li>
+		{{/each}}
+		</ul>
+	</script>
+
+</head>
+
+<body>
+
+<div id="div1"></div>
+
+
+
+</body>
+
+<script>
+
+
+
+$.ajax({
+    url: 'https://5dc588200bbd050014fb8ae1.mockapi.io/assessment',
+    success: function(result){
+		 //$("#div1").html(result[0].id);
+		 $.each(result, console.log);
+		 
+		var source   = $("#template").html();
+        var template = Handlebars.compile(source);
+        var html = template(result);
+
+        $("#div1").append(html);
+		 
+		 //jQuery.each( result, function( i, val ) {
+			//    $("#div").append( document.createTextNode(val.avatar + val.createdAt + val.id + val.name));
+			//});
+		$(document).on("click", ".buttonToggle", function() {
+			$(this).next("#hiddenText").toggle();
+		});
+    }
+});
+
+</script>
+
+</<html>
